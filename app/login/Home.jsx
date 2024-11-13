@@ -8,11 +8,11 @@ import { useRouter } from "expo-router";
 const Home = () => {
   const handleSignIn = async () => {
     const token = await client.login();
-    if (token) {
-      // User was authenticated
-      await services.storeData("login", "true");
-      router.replace("/");
-    }
+    //if (token) {
+    // User was authenticated
+    await services.storeData("login", "true");
+    // router.replace("/");
+    //}
   };
   const router = useRouter();
   return (
