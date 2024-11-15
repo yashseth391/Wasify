@@ -8,16 +8,16 @@ import { useRouter } from "expo-router";
 const Home = () => {
   const handleSignIn = async () => {
     const token = await client.login();
-    //if (token) {
-    // User was authenticated
-    await services.storeData("login", "true");
-    // router.replace("/");
-    //}
+    if (token) {
+      // User was authenticated
+      await services.storeData("login", "true");
+      router.replace("/");
+    }
   };
   const router = useRouter();
   return (
     <View style={{ display: "flex", alignItems: "center" }}>
-      <Image source={require("../../assets/bg.png")} style={styles.Bg} />
+      <Image source={require("../../assets/bg3.png")} style={styles.Bg} />
       <View style={styles.content}>
         <Text style={styles.contentText}>Wasification</Text>
         <Text style={styles.subContentText}>Get To know your waste</Text>
@@ -37,7 +37,7 @@ export default Home;
 const styles = StyleSheet.create({
   Bg: {
     width: 350,
-    height: 430,
+    height: 450,
     marginTop: 30,
     borderWidth: 5,
     borderRadius: 20,

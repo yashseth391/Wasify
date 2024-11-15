@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
-import db from "@react-native-firebase/database";
+
 const Home = () => {
   const [image, setImage] = useState(null);
 
