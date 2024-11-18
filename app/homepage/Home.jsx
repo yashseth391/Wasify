@@ -12,7 +12,7 @@ import Headers from "../../components/Headers";
 import services from "../../utils/services";
 import { useRouter } from "expo-router";
 import { client } from "../../utils/KindeConfig";
-
+import Constants from "expo-constants";
 const Home = () => {
   const router = useRouter();
   const [image, setImage] = useState(null);
