@@ -1,13 +1,33 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
+import Headers from "../../components/Headers";
+import services from "../../utils/services";
+import { useRouter } from "expo-router";
+import { client } from "../../utils/KindeConfig";
 
 const Home = () => {
+  const router = useRouter();
   const [image, setImage] = useState(null);
 
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] =
     useState(null);
+  const handleLogout = async () => {
+    const loggedOut = await client.logout();
+
+    if (loggedOut) {
+      await services.storeData("login", "false");
+      router.replace("/login/Home");
+    }
+  };
 
   const getPermissions = async () => {
     const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
@@ -62,6 +82,7 @@ const Home = () => {
   };
   return (
     <View style={styles.container}>
+      <Headers />
       <View style={styles.header}>
         <View style={styles.openCamera}>
           <TouchableOpacity style={styles.btn} onPress={() => openCamera()}>
@@ -75,11 +96,12 @@ const Home = () => {
           </TouchableOpacity>
           {image && (
             <Image
-              source={{ uri: image }}
+              source={{ uri: user?.picture }}
               style={{ width: 200, height: 200 }}
             />
           )}
         </View>
+        <Button title="Log Out" onPress={handleLogout} />
       </View>
     </View>
   );
