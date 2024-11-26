@@ -12,7 +12,7 @@ import Headers from "../../components/Headers";
 import services from "../../utils/services";
 import { useRouter } from "expo-router";
 import { client } from "../../utils/KindeConfig";
-import Constants from "expo-constants";
+
 const Home = () => {
   const router = useRouter();
   const [image, setImage] = useState(null);
@@ -20,6 +20,8 @@ const Home = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] =
     useState(null);
+  const [apiData, setApiData] = useState(null);
+  const [apiImageUrl, setApiImageUrl] = useState(null);
   const handleLogout = async () => {
     const loggedOut = await client.logout();
 
@@ -40,8 +42,22 @@ const Home = () => {
 
   useEffect(() => {
     getPermissions();
+    fetchApiData();
   }, []);
-
+  const fetchApiData = async () => {
+    try {
+      const response = await fetch(
+        "https://testing-render-55i0.onrender.com/ans/"
+      );
+      if (response.ok) {
+        const imageUrl = response.url;
+        setApiImageUrl(imageUrl);
+      }
+      let data = response;
+    } catch (error) {
+      console.log("Error fetching Data: ", error);
+    }
+  };
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -102,6 +118,10 @@ const Home = () => {
           )}
         </View>
         <Button title="Log Out" onPress={handleLogout} />
+        <Image
+          source={{ uri: apiImageUrl }}
+          style={{ height: 40, width: 50 }}
+        />
       </View>
     </View>
   );
